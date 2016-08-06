@@ -1,6 +1,10 @@
 {
   "name": "remote-config",
+<<<<<<< HEAD
   "version": "0.0.1",
+=======
+  "version": "0.0.0",
+>>>>>>> 4437502e1531216725d34ed80a327683654d4f2d
   "description": "A simple way to get remote config files",
   "main": "./index.js",
   "scripts": {},
@@ -26,8 +30,12 @@
     "mocha": "^3.0.1"
   },
   "dependencies": {
+<<<<<<< HEAD
     "node-fetch": "^1.6.0",
     "shell-arguments": "^1.1.9"
+=======
+    "node-fetch": "^1.6.0"
+>>>>>>> 4437502e1531216725d34ed80a327683654d4f2d
   },
   "remote-config": {
     ".jshintrc": "https://raw.githubusercontent.com/jshint/jshint/master/examples/.jshintrc"
