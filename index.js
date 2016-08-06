@@ -1,8 +1,4 @@
 #!/usr/bin/env node
-/*jslint node: true, indent: 2 */
-/*global require */
-
-var args = require('shell-args');
-var remoteConfig = require('./lib/remoteConfig');
-
-remoteConfig(args);
+var args = require('shell-arguments'); //jshint ignore:line
+var remoteConfig = require('./lib/remoteConfig'); //jshint ignore:line
+remoteConfig(args); //jshint ignore:line
