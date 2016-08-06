@@ -26,7 +26,8 @@
     "mocha": "^3.0.1"
   },
   "dependencies": {
-    "node-fetch": "^1.6.0"
+    "node-fetch": "^1.6.0",
+    "shell-arguments": "^1.1.9"
   },
   "remote-config": {
     ".jshintrc": "https://raw.githubusercontent.com/jshint/jshint/master/examples/.jshintrc"
