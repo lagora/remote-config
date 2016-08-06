@@ -1,5 +1,8 @@
- // #!/usr/bin/env node
-var arguments = require('shell-arguments');
+#!/usr/bin/env node
+/*jslint node: true, indent: 2 */
+/*global require */
+
+var args = require('shell-args');
 var remoteConfig = require('./lib/remoteConfig');
 
-remoteConfig(arguments);
+remoteConfig(args);
