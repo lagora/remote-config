@@ -15,3 +15,17 @@ remote-config [OPTIONS]
 --overwrite=[true|false] // default: true
 --verbose=[true|false] // default: true
 ```
+
+### Minimalistic config file
+Remote-config will look in the defined config file for the "remote-config" key, containing pairs such as "filepath_to_write": "url_to_fetch".
+```
+{
+  "remote-config": {
+    ".jshintrc": "https://raw.githubusercontent.com/jshint/jshint/master/examples/.jshintrc"
+  }
+}
+```
+
+### Tips ?
+You can, obviously, use remote-config to download a file containing various other config files.
+So you'll had to only remember one url, go figure.
