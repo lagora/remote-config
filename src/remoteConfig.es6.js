@@ -5,9 +5,9 @@ import * as fs from 'fs';
 const defaultArguments = {
   config: 'package.json',
   key: 'remote-config',
-  overwrite: true,
+  overwrite: false,
   verbose: true,
-  recursive: true,
+  recursive: false,
 };
 
 export const fileFound = filepath => fs.existsSync(filepath);
@@ -21,7 +21,7 @@ export function* iterateRemotes(remotes) {
   }
 }
 
-export const persistRemoteFile = (filepath, content) => fs.writeFileSync(
+export const persistRemoteFile = (filepath, content, fs = fs) => fs.writeFileSync(
   `./${filepath}`, content, 'utf8'
 );
 export const getRemoteFile = (url, callback) => fetch(url)
