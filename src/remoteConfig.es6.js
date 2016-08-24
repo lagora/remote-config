@@ -1,54 +1,66 @@
 import 'babel-polyfill';
 import fetch from 'node-fetch';
-import {
-  existsSync,
-  readFileSync,
-  writeFileSync,
-} from 'fs';
+import * as fs from 'fs';
 
-export const getFile = path => (existsSync(path) ? readFileSync(path).toString() : false);
-export const getJSONContent = content => JSON.parse(content);
-export const getJSONFile = path => getJSONContent(getFile(path));
-export const getDefaultArguments = () => getJSONFile('./default.arguments.json');
-// export const getConfig = () => {
-//   const config = {};
-// }
+const defaultArguments = {
+  config: 'package.json',
+  key: 'remote-config',
+  overwrite: true,
+  verbose: true,
+  recursive: true,
+};
 
-export const checkForRemoteConfigKey = (config, key) => config.key === key;
-export const mergeArguments = args => Object.assign({}, getDefaultArguments(), args || {});
-// export checkForConfigFile = configFile => configFile || new Error('no config file found');
-// export checkForRemotes = remotes => remotes || new Error('no remotes files found');
+export const fileFound = filepath => fs.existsSync(filepath);
+export const getFile = filepath => fileFound(filepath) ? fs.readFileSync(filepath).toString() : false;// eslint-disable-line
+export const getJSONFile = path => JSON.parse(getFile(path));
+export const mergeArguments = args => Object.assign({}, defaultArguments, args || {});
 
 export function* iterateRemotes(remotes) {
-  for (let filepath of Object.keys(remotes)) {
+  for (const filepath of Object.keys(remotes)) {
     yield [filepath, remotes[filepath]];
+  }
+}
+
+export const persistRemoteFile = (filepath, content) => fs.writeFileSync(
+  `./${filepath}`, content, 'utf8'
+);
+export const getRemoteFile = (url, callback) => fetch(url)
+.then(response => response.text()).then(callback);
+export const getUrlFromRemoteSpecs = remote => remote.url || remote;
+export const getRemote = (specs, callback) => getRemoteFile(
+  getUrlFromRemoteSpecs(specs), content => callback(content)
+);
+export const cantOverwrite = (overwrite, filepath) => !overwrite && fileFound(filepath);// eslint-disable-line
+export const cantDoRecursive = (recursive, filepath) => recursive && /\.json/i.test(filepath);// eslint-disable-line
+export const msg = (args, text) => args.verbose ? console.log(text) : false;// eslint-disable-line
+
+export const cycleRemotes = (remotes, args) => {
+  for (const [filepath, specs] of iterateRemotes(remotes)) {
+    msg(args, `\nDOING: ${filepath}`);
+
+    const { key, overwrite, recursive } = args;
+    const mergedSpecs = { key, config: filepath, overwrite, recursive };
+    const callback = fileContent => {
+      if (cantOverwrite(args.overwrite, filepath)) {
+        msg(args, `OVERWRITE: ${args.overwrite} so SKIPPING: ${filepath}`);
+      } else {
+        msg(args, `DONE: ${filepath}`);
+        persistRemoteFile(filepath, fileContent);
+      }
+
+      if (cantDoRecursive(args.recursive, filepath)) {
+        msg(args, `RECURSIVE: ${args.recursive} so RUNNING: ${filepath}`);
+        run(Object.assign({}, args, { config: filepath }));// eslint-disable-line
+      } else if (args.recursive) {
+        msg(args, `RECURSIVE: ${args.recursive} yet ${filepath} is not a *.json file`);
+      }
+    };
+
+    getRemote(Object.assign({}, specs, mergedSpecs), callback);
   }
 };
 
-export const getResponseAsText = response => response.text();
-export const getRemoteFile = (url, callback) => fetch(url).then(getResponseAsText).then(callback);
-export const persisRemoteFile = (filepath, content) => writeFileSync(filepath, content, 'utf8');
-export const getUrlFromRemoteSpecs = remote => remote.url || remote;
-export const isJSON = filepath => filepath.toLoweCase().indexOf('.json') > 1;
-
-export const getRemote = (specs, callback) => {
-  const url = getUrlFromRemoteSpecs(specs);
-  getRemoteFile(url, callback);
-}
-
-export const cycleRemotes = remotes => {
-  for (let [filepath, specs] of iterateRemotes(remotes)) {
-    const callback = (content) => {
-      const fileContent = isJSON(filepath) ? content : getJSONContent(content);
-      console.log('filepath', filepath, '\n', 'fileContent', fileContent);
-      persisRemoteFile(filepath, fileContent);
-    }
-    getRemote(specs, callback);
-  }
-}
-
-export const run = (userArgs) => {
-  console.log('userArgs', userArgs);
+export function run(userArgs) {
   const args = mergeArguments(userArgs);
   const configFile = getJSONFile(args.config);
 
@@ -56,21 +68,9 @@ export const run = (userArgs) => {
     return new Error('no config file found');
   }
 
-  const remotes = configFile[args.key]
-
-  if (Object.keys(remotes).length === 0) {
+  if (Object.keys(configFile[args.key]).length === 0) {
     return new Error('no remotes files found');
   }
 
-  cycleRemotes(remotes);
-};
-
-const remoteConfig = {
-  getFile,
-  getJSONFile,
-  getDefaultArguments,
-};
-
-export default remoteConfig;
-
-// export const checkConfig = args =>
+  return cycleRemotes(configFile[args.key], args);
+}

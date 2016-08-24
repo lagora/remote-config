@@ -1,7 +1,0 @@
-{
-  "config": "package.json",
-  "key": "remote-config",
-  "overwrite": false,
-  "verbose": true,
-  "recursive": false
-}

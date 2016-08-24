@@ -1,63 +1,40 @@
 import 'babel-polyfill';
 import assert from 'assert';
 import {
+  fileFound,
   getFile,
   getJSONFile,
-  getDefaultArguments,
-  checkForRemoteConfigKey,
+  mergeArguments,
+  persistRemoteFile,
   getRemoteFile,
-  run,
+  getUrlFromRemoteSpecs,
+  getRemote,
+  cantOverwrite,
+  cantDoRecursive,
+  msg,
 } from '../src/remoteConfig.es6';
 
-describe('remoteConfig.*', () => {
-  describe('*.getFile', () => {
-    it('must read a file given it\'s filepath', () => {
-      const configFile = getFile('./default.arguments.json');
-      assert(typeof configFile === 'string');
-      assert(configFile.length > 2);
-    });
-
-    it('must return false if the filepath is wrong', () => assert(!getFile('./not.to.be.found')));
+describe('fileFound', () => {
+  it('must return true if a file exists (pretty lame test)', () => {
+    assert(fileFound('package.json'));
   });
+});
 
-  describe('*.getJSONFile', () => {
-    it('must read a JSON file given it\'s filepath', () => assert(
-      typeof getJSONFile('./default.arguments.json') === 'object')
-    );
-    it('must return false if the filepath is wrong', () => assert(!getJSONFile('./not.to.be.found')));
+describe('getFile', () => {
+  it('must return the content of a file', () => {
+    assert(typeof getFile('package.json') === 'string');
   });
+});
 
-  describe('*.getDefaultArguments', () => {
-    it('must return the default config', () => {
-      const args = getDefaultArguments();
-      assert(typeof args === 'object');
-      describe('default config values', () => {
-        it('config must be \'package.json\'', () => assert(args.config === 'package.json'));
-        it('key must be \'remote-config\'', () => assert(args.key === 'remote-config'));
-        it('overwrite must be FALSE', () => assert(args.overwrite === false));
-        it('verbose must be FALSE', () => assert(args.verbose === true));
-        it('recursive must be FALSE', () => assert(args.recursive === false));
-      });
-    });
+describe('getJSONFile', () => {
+  it('must return an object from a JSON file', () => {
+    assert(typeof getJSONFile('package.json') === 'object');
   });
+});
 
-  describe('*.checkForRemoteConfigKey', () => {
-    it('must return TRUE if the key is present in the config', () => assert(
-      checkForRemoteConfigKey(getDefaultArguments(), 'remote-config')
-    ));
-  })
-
-  describe('*.getRemoteFile', () => {
-    it('must return ', () => {
-      const filepath = 'remote-config.json';
-      const url = 'https://gist.githubusercontent.com/lagora/7df78ecd604d77d5e65bd6f74a7cf137/raw/6f143584825e7cd8363e8910f2dc0e8ff41fd3b1/remote-config.json';
-      getRemoteFile(url);
-    });
-  });
-
-  describe('*.run', () => {
-    it('', () => {
-      run();
-    });
+describe('mergeArguments', () => {
+  it('must merge two objects', () => {
+    const result = mergeArguments({ a: 1}, { b: 2});
+    assert(result.a === 1 && result.b === 2);
   });
 });
