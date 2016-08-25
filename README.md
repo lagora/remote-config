@@ -1,4 +1,5 @@
 # remote-config
+[![Build Status](https://travis-ci.org/lagora/remote-config.svg?branch=dev)](https://travis-ci.org/lagora/remote-config)
 
 ## Disclaimer :
 #### This module is provided as is, I decline any responsability for any consequences, wrong doing, unexpected effects linked in any way to the usage of the aforementioned module.

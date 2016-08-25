@@ -5,13 +5,13 @@ import * as fs from 'fs';
 const defaultArguments = {
   config: 'package.json',
   key: 'remote-config',
-  overwrite: false,
+  overwrite: true,
   verbose: true,
   recursive: false,
 };
 
-export const fileFound = filepath => fs.existsSync(filepath);
-export const getFile = filepath => fileFound(filepath) ? fs.readFileSync(filepath).toString() : false;// eslint-disable-line
+export const fileFound = (filepath, f = fs) => f.existsSync(filepath);
+export const getFile = (filepath, f = fs) => fileFound(filepath, f) ? f.readFileSync(filepath).toString() : false;// eslint-disable-line
 export const getJSONFile = path => JSON.parse(getFile(path));
 export const mergeArguments = args => Object.assign({}, defaultArguments, args || {});
 
@@ -21,7 +21,7 @@ export function* iterateRemotes(remotes) {
   }
 }
 
-export const persistRemoteFile = (filepath, content, fs = fs) => fs.writeFileSync(
+export const persistRemoteFile = (filepath, content, f = fs) => f.writeFileSync(
   `./${filepath}`, content, 'utf8'
 );
 export const getRemoteFile = (url, callback) => fetch(url)

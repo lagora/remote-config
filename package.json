@@ -1,6 +1,6 @@
 {
   "name": "remote-config",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "A simple way to get remote config files",
   "main": "./index.js",
   "scripts": {
