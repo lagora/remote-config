@@ -7,7 +7,7 @@
 - YAML style configuration file: Why not ?
 - overwrite & recursive modes working together: Just because a remote file can't be written doesn't mean we can't use it's content
 
-## [1.0.0]
+## [1.0.0] 2016-08-25
 ### Added
 - ```key``` option to define where to look for remote files informations
 - Recursive option for ```*.json``` file, accessible with ```--recursive=[true|false]```, default to false
