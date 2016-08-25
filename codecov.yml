@@ -1,0 +1,40 @@
+codecov:
+  branch: dev
+  bot: null
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  notify:
+    webhook:
+      default:
+        url: null
+        threshold: null
+        branches: null
+        only_pulls: null
+
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 42
+        branches: 'dev'
+
+    patch:
+      default:
+        target: auto
+        branches: 'dev'
+
+    changes:
+      default:
+        branches: 'dev'
+
+  ignore: null
+
+comment:
+  layout: "header, diff, changes, sunburst, uncovered, tree"
+  branches: null
+  behavior: default
