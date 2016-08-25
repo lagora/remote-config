@@ -14,21 +14,29 @@ import {
   msg,
 } from '../src/remoteConfig.es6';
 
+const fakeFsEval = (filepath) => filepath.indexOf('.json') > -1;
+
+const fakeFs = {
+  existsSync: filepath => fakeFsEval(filepath),
+  readFileSync: filepath => fakeFsEval(filepath) ? '' : false,
+  writeFileSync: filepath => fakeFsEval(filepath),
+}
+
 describe('fileFound', () => {
   it('must return true if a file exists (pretty lame test)', () => {
-    assert(fileFound('package.json'));
+    assert(fileFound('package.json', fakeFs));
   });
   it('must false if a file is not found (pretty lame test)', () => {
-    assert(!fileFound('package.not'));
+    assert(!fileFound('package.not', fakeFs));
   });
 });
 
 describe('getFile', () => {
   it('must return the content of a file', () => {
-    assert(typeof getFile('package.json') === 'string');
+    assert(typeof getFile('package.json', fakeFs) === 'string');
   });
   it('must return false if the file is not found', () => {
-    assert(getFile('package.not') === false);
+    assert(getFile('package.not', fakeFs) === false);
   });
 });
 

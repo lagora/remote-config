@@ -1,5 +1,6 @@
 # remote-config
-[![Build Status](https://travis-ci.org/lagora/remote-config.svg?branch=dev)](https://travis-ci.org/lagora/remote-config)
+[![Build Status](https://travis-ci.org/lagora/remote-config.svg?branch=dev)](https://travis-ci.org/lagora/remote-config) [![codecov](https://codecov.io/gh/lagora/remote-config/branch/dev/graph/badge.svg)](https://codecov.io/gh/lagora/remote-config)
+ [![Coverage Status](https://coveralls.io/repos/github/lagora/remote-config/badge.svg?branch=dev)](https://coveralls.io/github/lagora/remote-config?branch=dev) [![Dependency Status](https://dependencyci.com/github/lagora/remote-config/badge)](https://dependencyci.com/github/lagora/remote-config) [![bitHound Code](https://www.bithound.io/github/lagora/remote-config/badges/code.svg)](https://www.bithound.io/github/lagora/remote-config)  [![CircleCI](https://circleci.com/gh/lagora/remote-config/tree/dev.svg?style=svg)](https://circleci.com/gh/lagora/remote-config/tree/dev)
 
 ## Disclaimer :
 #### This module is provided as is, I decline any responsability for any consequences, wrong doing, unexpected effects linked in any way to the usage of the aforementioned module.
