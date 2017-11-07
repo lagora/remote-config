@@ -1,4 +1,6 @@
 # remote-config
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/lagora/remote-config.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/lagora/remote-config.svg?branch=dev)](https://travis-ci.org/lagora/remote-config) [![codecov](https://codecov.io/gh/lagora/remote-config/branch/dev/graph/badge.svg)](https://codecov.io/gh/lagora/remote-config) [![Dependency Status](https://dependencyci.com/github/lagora/remote-config/badge)](https://dependencyci.com/github/lagora/remote-config)
 
 ## A small tool to get remote configuration files (.eslintrc, etc)
