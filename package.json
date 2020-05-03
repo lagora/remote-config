@@ -8,7 +8,9 @@
     "build": "./node_modules/.bin/babel ./src/remoteConfig.es6.js -o ./dist/remoteConfig.js",
     "watch": "./node_modules/.bin/mocha --compilers js:babel-core/register -w",
     "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha -- --compilers js:babel-core/register --recursive",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bin": {
     "remote-config": "./index.js"
@@ -52,7 +54,8 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "node-fetch": "^1.6.0",
-    "shell-arguments": "^1.1.9"
+    "shell-arguments": "^1.1.9",
+    "snyk": "^1.316.2"
   },
   "remote-config": {
     "remote-config.json": {
@@ -61,5 +64,6 @@
   },
   "npm-watch": {
     "eslint": "src/*.es6.js"
-  }
+  },
+  "snyk": true
 }
